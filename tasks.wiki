@@ -1,0 +1,36 @@
+= Quetty =
+
+2 parts
+== Tokenizer ==
+With given input text, and a list of matching rules, 
+should return output with tokens that meet the satisfy the rules
+
+===== matching rules =====
+Should they be
+	- functions? < lacks configurability
+		- any way of packaging go single files and dynamically loading them?
+	- config json file with regex
+		- lacks flexibilty for matching rule.
+Currently going with individual rule functions
+
+Start with tests
+
+
+
+== Terminal Plugin ==
+1. Capture terminal contents 
+2. Send to tokenizer
+3. Display Output through fzf
+4. If entry selected, send the content back to terminal
+Currently, implement for tmux.
+=== tmux ===
+
+=== vim ===
+
+
+== Installer script ==
+Follow fzf pattern
+
+== Tasks ==
+- [ ] Study basic TDD with go
+- [ ] Setup infra for tests to start failing
