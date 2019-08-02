@@ -1,0 +1,9 @@
+*~
+*.swp
+*.swo
+go.sum
+go.mod
+cscope.*
+tags
+.idea/*
+quetty
