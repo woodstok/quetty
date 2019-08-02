@@ -32,5 +32,6 @@ Currently, implement for tmux.
 Follow fzf pattern
 
 == Tasks ==
-- [ ] Study basic TDD with go
-- [ ] Setup infra for tests to start failing
+- [X] Study basic TDD with go
+- [X] Setup infra for tests to start failing
+- [ ] Add splitFunc as parameter
