@@ -34,4 +34,6 @@ Follow fzf pattern
 == Tasks ==
 - [X] Study basic TDD with go
 - [X] Setup infra for tests to start failing
-- [ ] Add splitFunc as parameter
+- [X] Add splitFunc as parameter
+- [ ] Add space delimited tokenizer
+- [ ] Add path tokenizer

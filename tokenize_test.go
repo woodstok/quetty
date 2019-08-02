@@ -14,9 +14,18 @@ func assertSliceEqual(t *testing.T, want, got []string) {
 }
 
 func TestTokenize(t *testing.T) {
+	t.Run("Nil Tokenizer", func(t *testing.T) {
+		basicString := "This is a sentence"
+		got := Tokenize(basicString, func(input string) []string {
+			return []string{input}
+
+		})
+		assertSliceEqual(t, []string{basicString}, got)
+	})
+
 	t.Run("tokenize basic set of strings", func(t *testing.T) {
 		want := []string{"This", "is", "a", "sentence"}
-		got := Tokenize("This is a sentence")
+		got := Tokenize("This is a sentence", BasicTokenizer)
 		assertSliceEqual(t, want, got)
 	})
 }
