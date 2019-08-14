@@ -37,3 +37,5 @@ Follow fzf pattern
 - [X] Add splitFunc as parameter
 - [ ] Add space delimited tokenizer
 - [ ] Add path tokenizer
+- [ ] Add regex tokenizer
+- [ ] Change tokenizers to return error
