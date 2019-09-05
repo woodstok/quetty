@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	quetty.Tokenize("testing", &quetty.NilTokenizer{})
+	quetty.ParseOptions()
 }
