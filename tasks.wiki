@@ -10,7 +10,7 @@ Should they be
 	- functions? < lacks configurability
 		- any way of packaging go single files and dynamically loading them?
 	- config json file with regex
-		- lacks flexibilty for matching rule.
+		- lacks flexibilty for matching rule i.e extra control/valiadation that we can write via code
 Currently going with individual rule functions
 
 Start with tests
@@ -35,7 +35,10 @@ Follow fzf pattern
 - [X] Study basic TDD with go
 - [X] Setup infra for tests to start failing
 - [X] Add splitFunc as parameter
-- [ ] Add space delimited tokenizer
-- [ ] Add path tokenizer
-- [ ] Add regex tokenizer
-- [ ] Change tokenizers to return error
+- [X] Add space delimited tokenizer
+- [X] Add path tokenizer
+- [X] Add regex tokenizer
+- [X] Change tokenizers to return error
+- [ ] change structure to build main application
+- [ ] add cli arguments/switches
+- [ ] add tokenizer combiner ( or operation )?? Is this needed

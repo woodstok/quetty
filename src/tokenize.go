@@ -1,4 +1,4 @@
-package main
+package quetty
 
 import (
 	"regexp"
