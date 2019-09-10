@@ -2,7 +2,6 @@ package quetty
 
 import (
 	"flag"
-	"fmt"
 )
 
 type Options struct {
@@ -23,6 +22,6 @@ func ParseOptions() *Options {
 	opts := &Options{}
 	initFlags(opts)
 	flag.Parse()
-	fmt.Printf("opts = %+v\n", opts)
+	// fmt.Printf("opts = %+v\n", opts)
 	return opts
 }

@@ -1,7 +1,6 @@
 package quetty
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
@@ -17,6 +16,10 @@ func Run(opts *Options) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("Tokens are %s\n", tokens)
 
+	printer, err := NewPrinter(opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+	printer.Print(os.Stdout, tokens)
 }
