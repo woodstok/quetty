@@ -5,5 +5,5 @@ import (
 )
 
 func main() {
-	quetty.ParseOptions()
+	quetty.Run(quetty.ParseOptions())
 }
