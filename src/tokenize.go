@@ -8,7 +8,11 @@ import (
 const (
 	WORDREGEX = `\w+`
 	NUMREGEX  = `\d+`
-	HASHREGEX = `[a-f0-9A-F]{4,}\b`
+
+	// technically all numbers match a basic hashregex
+	// but let us only match hashes that has
+	// atleast one alphabet in it
+	HASHREGEX = `([a-f0-9A-F]*[a-fA-F][a-f0-9A-F]*){4,}\b`
 )
 
 type Tokenizer interface {

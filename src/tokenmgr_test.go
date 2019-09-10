@@ -6,9 +6,10 @@ import (
 )
 
 func TestTokenMgr(t *testing.T) {
-	basicString := "This is a sentence 43 567 abcd dcba dead123beef non123hash"
-	wantNum := "43 567 123"
+	basicString := "This is a sentence 43 567123 abcd dcba dead123beef non123hash"
+	wantNum := "43 567123 123"
 	wantHash := "abcd dcba dead123beef"
+	wantNumAndHash := "43 567123 123 abcd dcba dead123beef"
 	t.Run("token manager will return error on no tokenizers", func(t *testing.T) {
 		_, err := NewTokenMgr(&Options{})
 		assertSomeError(t, err)
@@ -27,6 +28,8 @@ func TestTokenMgr(t *testing.T) {
 			inputStr: basicString, expectErr: false, wantStr: wantNum},
 		{name: "tokenize hashes", options: &Options{matchHash: true},
 			inputStr: basicString, expectErr: false, wantStr: wantHash},
+		{name: "tokenize hashes and numbers", options: &Options{matchHash: true, matchNum: true},
+			inputStr: basicString, expectErr: false, wantStr: wantNumAndHash},
 	}
 
 	for _, tt := range tokenMgrTests {
