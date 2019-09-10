@@ -16,7 +16,7 @@ func initFlags(opt *Options) {
 	flag.BoolVar(&opt.matchWord, "word", false, "Tokenize basic words(w+)")
 	flag.BoolVar(&opt.matchNum, "num", false, "Tokenize basic numbers")
 	flag.BoolVar(&opt.matchHash, "hash", false, "Tokenize hash values")
-	flag.UintVar(&opt.minLen, "m", 0, "minimum length of tokens")
+	flag.UintVar(&opt.minLen, "m", 4, "minimum length of tokens")
 }
 
 func ParseOptions() *Options {

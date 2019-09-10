@@ -5,6 +5,12 @@ import (
 	"strings"
 )
 
+const (
+	WORDREGEX = `\w+`
+	NUMREGEX  = `\d+`
+	HASHREGEX = `[a-f0-9A-F]{4,}\b`
+)
+
 type Tokenizer interface {
 	Tokenize(input string) ([]string, error)
 }
