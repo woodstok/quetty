@@ -39,6 +39,6 @@ Follow fzf pattern
 - [X] Add path tokenizer
 - [X] Add regex tokenizer
 - [X] Change tokenizers to return error
-- [ ] change structure to build main application
-- [ ] add cli arguments/switches
+- [X] change structure to build main application
+- [X] add cli arguments/switches
 - [ ] add tokenizer combiner ( or operation )?? Is this needed
