@@ -13,6 +13,7 @@ bin:
 
 test: $(SOURCES)
 	SHELL=/bin/sh GOOS= $(GO) test -v -tags "$(TAGS)" \
+				github.com/woodstok/quetty \
 				github.com/woodstok/quetty/src \
 
 clean:

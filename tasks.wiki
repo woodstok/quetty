@@ -22,6 +22,7 @@ Start with tests
 2. Send to tokenizer
 3. Display Output through fzf
 4. If entry selected, send the content back to terminal
+5. Option to send it to vim first for editing before sending it back to terminal!!!
 Currently, implement for tmux.
 === tmux ===
 
@@ -41,4 +42,10 @@ Follow fzf pattern
 - [X] Change tokenizers to return error
 - [X] change structure to build main application
 - [X] add cli arguments/switches
-- [ ] add tokenizer combiner ( or operation )?? Is this needed
+- [X] add tokenizer combiner ( or operation )?? Is this needed
+- [ ] add goldenfile tests
+- [ ] parallelize tokenMgr
+    - [ ] make tokenset threadsafe
+- [ ] add ip address tokenizer/tests
+- [ ] add path tokenizer/tests
+- [ ] add identifier tokenizer/tests

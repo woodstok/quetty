@@ -2,7 +2,11 @@ package quetty
 
 import (
 	"reflect"
+	"sort"
+	"strings"
 	"testing"
+
+	"github.com/andreyvit/diff"
 )
 
 func assertNoError(t *testing.T, err error) {
@@ -41,6 +45,21 @@ func assertTokensEqual(t *testing.T, want, got Tokens) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
 		t.Errorf("want %v, got %v", want, got)
+	}
+
+}
+
+func AssertSortedEqual(t *testing.T, testName, want, got string) {
+	t.Helper()
+	expectedLines := strings.Split(want, "\n")
+	gotLines := strings.Split(got, "\n")
+	sort.Strings(expectedLines)
+	sort.Strings(gotLines)
+	if !reflect.DeepEqual(expectedLines, gotLines) {
+		sortedExpected := strings.Join(expectedLines, "\n")
+		sortedGot := strings.Join(gotLines, "\n")
+		t.Errorf("Ouput not as expected for test '%s'\n%v", testName, diff.LineDiff(sortedExpected, sortedGot))
+
 	}
 
 }
