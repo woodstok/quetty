@@ -23,6 +23,6 @@ func ParseOptions() *Options {
 	opts := &Options{}
 	initFlags(opts)
 	flag.Parse()
-	fmt.Printf("opts = %+v", opts)
+	fmt.Printf("opts = %+v\n", opts)
 	return opts
 }
