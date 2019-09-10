@@ -10,6 +10,10 @@ func TestTokenMgr(t *testing.T) {
 	wantNum := "43 567123 123"
 	wantHash := "abcd dcba dead123beef"
 	wantNumAndHash := "43 567123 123 abcd dcba dead123beef"
+	wantMin4Basic := "This sentence 567123 abcd dcba dead123beef non123hash"
+	wantMin4Num := "567123"
+	wantMin4Hash := "abcd dcba dead123beef"
+	wantMin4NumAndHash := "567123 abcd dcba dead123beef"
 	t.Run("token manager will return error on no tokenizers", func(t *testing.T) {
 		_, err := NewTokenMgr(&Options{})
 		assertSomeError(t, err)
@@ -30,6 +34,14 @@ func TestTokenMgr(t *testing.T) {
 			inputStr: basicString, expectErr: false, wantStr: wantHash},
 		{name: "tokenize hashes and numbers", options: &Options{matchHash: true, matchNum: true},
 			inputStr: basicString, expectErr: false, wantStr: wantNumAndHash},
+		{name: "tokenize basic words with 4 minimum", options: &Options{minLen: 4, matchWord: true},
+			inputStr: basicString, expectErr: false, wantStr: wantMin4Basic},
+		{name: "tokenize numbers with 4 minimum", options: &Options{minLen: 4, matchNum: true},
+			inputStr: basicString, expectErr: false, wantStr: wantMin4Num},
+		{name: "tokenize hashes with 4 minimum", options: &Options{minLen: 4, matchHash: true},
+			inputStr: basicString, expectErr: false, wantStr: wantMin4Hash},
+		{name: "tokenize hashes and numbers with 4 minimum", options: &Options{minLen: 4, matchHash: true, matchNum: true},
+			inputStr: basicString, expectErr: false, wantStr: wantMin4NumAndHash},
 	}
 
 	for _, tt := range tokenMgrTests {

@@ -34,6 +34,10 @@ func NewTokenMgr(options *Options) (*TokenMgr, error) {
 	return &tokMgr, nil
 }
 
+func (tMgr *TokenMgr) Valid(val string) bool {
+	return len(val) >= int(tMgr.options.minLen)
+}
+
 func (tMgr *TokenMgr) Process(reader io.Reader) (Tokens, error) {
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(reader)
@@ -44,7 +48,11 @@ func (tMgr *TokenMgr) Process(reader io.Reader) (Tokens, error) {
 		if err != nil {
 			return nil, err
 		}
-		tokens.Extend(tokenSlice)
+		for _, val := range tokenSlice {
+			if tMgr.Valid(val) {
+				tokens.Add(val)
+			}
+		}
 	}
 	return tokens, nil
 }
