@@ -9,6 +9,8 @@ import (
 	"path"
 	"path/filepath"
 	"runtime"
+	"sort"
+	"strings"
 	"testing"
 
 	quetty "github.com/woodstok/quetty/src"
@@ -28,7 +30,12 @@ func fixturePath(t *testing.T, fixture string) string {
 }
 
 func writeFixture(t *testing.T, fixture string, content []byte) {
-	err := ioutil.WriteFile(fixturePath(t, fixture), content, 0644)
+	//sort contents
+	contentStr := string(content)
+	contentLines := strings.Split(contentStr, "\n")
+	sort.Strings(contentLines)
+	contentStr = strings.Join(contentLines, "\n")
+	err := ioutil.WriteFile(fixturePath(t, fixture), []byte(contentStr), 0644)
 	if err != nil {
 		t.Fatal(err)
 	}

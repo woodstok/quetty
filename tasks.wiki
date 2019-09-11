@@ -44,7 +44,8 @@ Follow fzf pattern
 - [X] add cli arguments/switches
 - [X] add tokenizer combiner ( or operation )?? Is this needed
 - [X] add goldenfile tests
-- [ ] add path tokenizer/tests
+- [X] add path tokenizer/tests
+- [ ] sort golden files so that test-update does not always rearrange the lines
 - [ ] add ip address tokenizer/tests
 - [ ] add identifier tokenizer/tests
 - [ ] parallelize tokenMgr
