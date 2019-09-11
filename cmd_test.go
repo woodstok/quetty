@@ -54,9 +54,7 @@ func TestCliArgs(t *testing.T) {
 		{"numbers", []string{"-num"}, "words", "num"},
 		{"hash", []string{"-hash"}, "hash", "hash"},
 		{"numhash", []string{"-hash", "-num"}, "hash", "numhash"},
-		// {"", []string{"ciao"}, "one-argument.golden"},
-		// {"multiple arguments", []string{"ciao", "hello"}, "multiple-arguments.golden"},
-		// {"shout arg", []string{"--shout", "ciao"}, "shout-arg.golden"},
+		{"path", []string{"-path"}, "path", "path"},
 	}
 
 	for _, tt := range tests {

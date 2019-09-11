@@ -43,9 +43,9 @@ Follow fzf pattern
 - [X] change structure to build main application
 - [X] add cli arguments/switches
 - [X] add tokenizer combiner ( or operation )?? Is this needed
-- [ ] add goldenfile tests
+- [X] add goldenfile tests
+- [ ] add path tokenizer/tests
+- [ ] add ip address tokenizer/tests
+- [ ] add identifier tokenizer/tests
 - [ ] parallelize tokenMgr
     - [ ] make tokenset threadsafe
-- [ ] add ip address tokenizer/tests
-- [ ] add path tokenizer/tests
-- [ ] add identifier tokenizer/tests

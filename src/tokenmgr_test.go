@@ -6,6 +6,11 @@ import (
 )
 
 func TestTokenMgr(t *testing.T) {
+	t.Run("token manager will return error on no tokenizers", func(t *testing.T) {
+		_, err := NewTokenMgr(&Options{})
+		assertSomeError(t, err)
+	})
+
 	basicString := "This is a sentence 43 567123 abcd dcba dead123beef non123hash"
 	wantNum := "43 567123 123"
 	wantHash := "abcd dcba dead123beef"
@@ -14,10 +19,9 @@ func TestTokenMgr(t *testing.T) {
 	wantMin4Num := "567123"
 	wantMin4Hash := "abcd dcba dead123beef"
 	wantMin4NumAndHash := "567123 abcd dcba dead123beef"
-	t.Run("token manager will return error on no tokenizers", func(t *testing.T) {
-		_, err := NewTokenMgr(&Options{})
-		assertSomeError(t, err)
-	})
+
+	pathString := "path1/path2/file1.txt file1 /path5/path6 file1.txt"
+	wantPath := "path1/path2/file1.txt /path5/path6 file1.txt"
 
 	tokenMgrTests := []struct {
 		name      string
@@ -42,6 +46,8 @@ func TestTokenMgr(t *testing.T) {
 			inputStr: basicString, expectErr: false, wantStr: wantMin4Hash},
 		{name: "tokenize hashes and numbers with 4 minimum", options: &Options{minLen: 4, matchHash: true, matchNum: true},
 			inputStr: basicString, expectErr: false, wantStr: wantMin4NumAndHash},
+		{name: "tokenize paths with 4 minimum", options: &Options{minLen: 4, matchPath: true},
+			inputStr: pathString, expectErr: false, wantStr: wantPath},
 	}
 
 	for _, tt := range tokenMgrTests {

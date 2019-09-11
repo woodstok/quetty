@@ -46,3 +46,57 @@ func TestTokenize(t *testing.T) {
 	}
 
 }
+
+func TestPathTokenizer(t *testing.T) {
+	pathTestString := `
+	file1
+	file2.txt
+	file3.tar.gz
+	/file4
+	/file5.jpg
+	/file6.tgz
+	/root/path1/path2
+	/root/path3/path4/
+	/root/path5/path6/filename.ext
+	/root/path7/path8/filename.ext.gz
+	root/path9/path10
+	root/path11/path14/
+	root/path13/path16/filename.ext
+	root/path15/path18/filename.ext.gz
+	root/pat-h.9/path10
+	root/pat-h.11/path14/
+	root/pat-h.13/path16/filename.ext
+	root/pat-h.15/path18/filename.ext.gz
+	https://testurl
+	http://testurl/1.txt
+	10.0.0.1
+	192.168.1.1
+	`
+	pathTestExpected := []string{
+
+		// "file1",
+		"file2.txt",
+		"file3.tar.gz",
+		"/file4",
+		"/file5.jpg",
+		"/file6.tgz",
+		"/root/path1/path2",
+		"/root/path3/path4/",
+		"/root/path5/path6/filename.ext",
+		"/root/path7/path8/filename.ext.gz",
+		"root/path9/path10",
+		"root/path11/path14/",
+		"root/path13/path16/filename.ext",
+		"root/path15/path18/filename.ext.gz",
+		"root/pat-h.9/path10",
+		"root/pat-h.11/path14/",
+		"root/pat-h.13/path16/filename.ext",
+		"root/pat-h.15/path18/filename.ext.gz",
+	}
+	t.Run("tokenize string of paths", func(t *testing.T) {
+		got, err := Tokenize(pathTestString, &PathTokenizer{})
+		assertNoError(t, err)
+		assertSliceEqual(t, pathTestExpected, got)
+	})
+
+}

@@ -1,6 +1,7 @@
 package quetty
 
 import (
+	"fmt"
 	"reflect"
 	"sort"
 	"strings"
@@ -37,7 +38,7 @@ func assertError(t *testing.T, got error, want error) {
 func assertSliceEqual(t *testing.T, want, got []string) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {
-		t.Errorf("want %v, got %v", want, got)
+		t.Errorf("want %v\ngot %v\ndiff %s\n", want, got, sliceDiff(want, got))
 	}
 }
 
@@ -62,4 +63,49 @@ func AssertSortedEqual(t *testing.T, testName, want, got string) {
 
 	}
 
+}
+
+func sliceDiff(want, got []string) string {
+	sort.Strings(want)
+	sort.Strings(got)
+	sortedExpected := strings.Join(want, "\n")
+	sortedGot := strings.Join(got, "\n")
+	return diff.LineDiff(sortedExpected, sortedGot)
+}
+
+func sliceDifference(want, got []string) string {
+	var sb strings.Builder
+	sort.Strings(want)
+	sort.Strings(got)
+	wLen := len(want)
+	gLen := len(got)
+	i := 0
+	j := 0
+	sb.WriteString("[")
+
+	for i < wLen && j < gLen {
+		if want[i] == got[j] {
+			i++
+			j++
+		} else if want[i] < got[j] {
+			sb.WriteString(fmt.Sprintf("-%s ", want[i]))
+			i++
+
+		} else {
+			sb.WriteString(fmt.Sprintf("+%s ", got[j]))
+			j++
+		}
+	}
+
+	for i < wLen {
+		sb.WriteString(fmt.Sprintf("-%s ", want[i]))
+		i++
+	}
+	for j < gLen {
+		sb.WriteString(fmt.Sprintf("+%s ", got[i]))
+		j++
+
+	}
+	sb.WriteString("]")
+	return sb.String()
 }
