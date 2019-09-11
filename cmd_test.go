@@ -62,6 +62,7 @@ func TestCliArgs(t *testing.T) {
 		{"hash", []string{"-hash"}, "hash", "hash"},
 		{"numhash", []string{"-hash", "-num"}, "hash", "numhash"},
 		{"path", []string{"-path"}, "path", "path"},
+		{"ip", []string{"-ip"}, "ip", "ip"},
 	}
 
 	for _, tt := range tests {

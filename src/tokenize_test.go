@@ -47,6 +47,27 @@ func TestTokenize(t *testing.T) {
 
 }
 
+func TestIpTokenizer(t *testing.T) {
+	IpTestString := `
+	10.0.0.1
+	192.168.1.1
+	2001:0db8:85a3:0000:0000:8a2e:0370:7334
+	2001:db8:85a3::8a2e:370:7334
+	`
+	IpTestExpected := []string{
+		"10.0.0.1",
+		"192.168.1.1",
+		"2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+		"2001:db8:85a3::8a2e:370:7334",
+	}
+	t.Run("tokenize ip addresses", func(t *testing.T) {
+		got, err := Tokenize(IpTestString, &IpTokenizer{})
+		assertNoError(t, err)
+		assertSliceEqual(t, IpTestExpected, got)
+	})
+
+}
+
 func TestPathTokenizer(t *testing.T) {
 	pathTestString := `
 	file1
