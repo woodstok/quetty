@@ -45,8 +45,8 @@ Follow fzf pattern
 - [X] add tokenizer combiner ( or operation )?? Is this needed
 - [X] add goldenfile tests
 - [X] add path tokenizer/tests
-- [ ] sort golden files so that test-update does not always rearrange the lines
-- [ ] add ip address tokenizer/tests
+- [X] sort golden files so that test-update does not always rearrange the lines
+- [X] add ip address tokenizer/tests
 - [ ] add identifier tokenizer/tests
 - [ ] parallelize tokenMgr
     - [ ] make tokenset threadsafe

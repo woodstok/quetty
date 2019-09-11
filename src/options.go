@@ -9,6 +9,7 @@ type Options struct {
 	matchNum  bool
 	matchHash bool
 	matchPath bool
+	matchIp   bool
 	minLen    uint
 }
 
@@ -17,6 +18,7 @@ func initFlags(opt *Options) {
 	flag.BoolVar(&opt.matchNum, "num", false, "Tokenize basic numbers")
 	flag.BoolVar(&opt.matchHash, "hash", false, "Tokenize hash values")
 	flag.BoolVar(&opt.matchPath, "path", false, "Tokenize filepaths")
+	flag.BoolVar(&opt.matchIp, "ip", false, "Tokenize ip addresses")
 	flag.UintVar(&opt.minLen, "m", 4, "minimum length of tokens")
 }
 

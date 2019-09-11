@@ -30,6 +30,10 @@ func NewTokenMgr(options *Options) (*TokenMgr, error) {
 		tokMgr.tokenizers = append(tokMgr.tokenizers,
 			&PathTokenizer{})
 	}
+	if options.matchIp {
+		tokMgr.tokenizers = append(tokMgr.tokenizers,
+			&IpTokenizer{})
+	}
 
 	if len(tokMgr.tokenizers) == 0 {
 		return nil, fmt.Errorf("No tokenizers specified")

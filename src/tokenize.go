@@ -1,6 +1,7 @@
 package quetty
 
 import (
+	"net"
 	"regexp"
 	"strings"
 )
@@ -13,6 +14,8 @@ const (
 	// but let us only match hashes that has
 	// atleast one alphabet in it
 	HASHREGEX = `([a-f0-9A-F]*[a-fA-F][a-f0-9A-F]*){4,}\b`
+	IPV4REGEX = `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`
+	IPV6REGEX = `[a-fA-F0-9:]+`
 )
 
 type Tokenizer interface {
@@ -46,6 +49,10 @@ func (t *NilTokenizer) Tokenize(input string) ([]string, error) {
 type RegexTokenizer struct {
 	pattern string
 	re_     *regexp.Regexp
+}
+
+func NewRegexTokenizer(re string) Tokenizer {
+	return &RegexTokenizer{pattern: re}
 }
 
 func (t *RegexTokenizer) Tokenize(input string) ([]string, error) {
@@ -104,4 +111,43 @@ func (t *PathTokenizer) Tokenize(input string) ([]string, error) {
 		}
 	}
 	return t.validStrings(t.re_.FindAllString(input, -1)), nil
+}
+
+type IpTokenizer struct {
+	reV4 *regexp.Regexp
+	reV6 *regexp.Regexp
+}
+
+func (t *IpTokenizer) isValid(token string) bool {
+	return net.ParseIP(token) != nil
+
+}
+
+func (t *IpTokenizer) validStrings(tokens []string) []string {
+	ret := make([]string, 0)
+	for _, tok := range tokens {
+		if t.isValid(tok) {
+			ret = append(ret, tok)
+		}
+	}
+	return ret
+}
+func (t *IpTokenizer) Tokenize(input string) ([]string, error) {
+	var err error
+	if t.reV4 == nil {
+		t.reV4, err = regexp.Compile(IPV4REGEX)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if t.reV6 == nil {
+		t.reV6, err = regexp.Compile(IPV6REGEX)
+		if err != nil {
+			return nil, err
+		}
+	}
+
+	v4Addresses := t.validStrings(t.reV4.FindAllString(input, -1))
+	v6Addresses := t.validStrings(t.reV6.FindAllString(input, -1))
+	return append(v4Addresses, v6Addresses...), nil
 }
