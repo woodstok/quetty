@@ -16,6 +16,7 @@ const (
 	HASHREGEX = `([a-f0-9A-F]*[a-fA-F][a-f0-9A-F]*){4,}\b`
 	IPV4REGEX = `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`
 	IPV6REGEX = `[a-fA-F0-9:]+`
+	TIMEREGEX = `((20\d\d-\d\d-\d\d)T((\d\d:\d\d:\d\d)(\.\d+(\+\d+)?)?)|((\d\d:\d\d:\d\d)(\.\d+(\+\d+)?)?)|(20\d\d-\d\d-\d\d))`
 )
 
 type Tokenizer interface {

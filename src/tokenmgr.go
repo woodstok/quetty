@@ -34,6 +34,10 @@ func NewTokenMgr(options *Options) (*TokenMgr, error) {
 		tokMgr.tokenizers = append(tokMgr.tokenizers,
 			&IpTokenizer{})
 	}
+	if options.matchTime {
+		tokMgr.tokenizers = append(tokMgr.tokenizers,
+			&RegexTokenizer{pattern: TIMEREGEX})
+	}
 
 	if len(tokMgr.tokenizers) == 0 {
 		return nil, fmt.Errorf("No tokenizers specified")
