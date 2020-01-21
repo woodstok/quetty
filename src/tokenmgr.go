@@ -38,6 +38,14 @@ func NewTokenMgr(options *Options) (*TokenMgr, error) {
 		tokMgr.tokenizers = append(tokMgr.tokenizers,
 			&RegexTokenizer{pattern: TIMEREGEX})
 	}
+	if options.matchNospace {
+		tokMgr.tokenizers = append(tokMgr.tokenizers,
+			&RegexTokenizer{pattern: NOSPACEREGEX})
+	}
+	if options.matchIdent {
+		tokMgr.tokenizers = append(tokMgr.tokenizers,
+			&RegexTokenizer{pattern: IDENTREGEX})
+	}
 
 	if len(tokMgr.tokenizers) == 0 {
 		return nil, fmt.Errorf("No tokenizers specified")

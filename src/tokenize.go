@@ -7,8 +7,10 @@ import (
 )
 
 const (
-	WORDREGEX = `\w+`
-	NUMREGEX  = `\d+`
+	WORDREGEX    = `\w+`
+	NOSPACEREGEX = `\S+`
+	IDENTREGEX   = `[A-Za-z][A-Za-z0-9]*`
+	NUMREGEX     = `\d+`
 
 	// technically all numbers match a basic hashregex
 	// but let us only match hashes that has

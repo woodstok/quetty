@@ -5,13 +5,15 @@ import (
 )
 
 type Options struct {
-	matchWord bool
-	matchNum  bool
-	matchHash bool
-	matchPath bool
-	matchIp   bool
-	matchTime bool
-	minLen    uint
+	matchWord    bool
+	matchNum     bool
+	matchHash    bool
+	matchPath    bool
+	matchIp      bool
+	matchTime    bool
+	matchNospace bool
+	matchIdent   bool
+	minLen       uint
 }
 
 func initFlags(opt *Options) {
@@ -21,6 +23,8 @@ func initFlags(opt *Options) {
 	flag.BoolVar(&opt.matchPath, "path", false, "Tokenize filepaths")
 	flag.BoolVar(&opt.matchIp, "ip", false, "Tokenize ip addresses")
 	flag.BoolVar(&opt.matchTime, "time", false, "Tokenize time addresses")
+	flag.BoolVar(&opt.matchNospace, "nospace", false, "Tokenize all nonspace tokens")
+	flag.BoolVar(&opt.matchIdent, "ident", false, "Tokenize identifiers")
 	flag.UintVar(&opt.minLen, "m", 4, "minimum length of tokens")
 }
 
