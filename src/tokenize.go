@@ -52,6 +52,10 @@ type RegexTokenizer struct {
 	re_     *regexp.Regexp
 }
 
+func NewRegexTokenizer(re string) Tokenizer {
+	return &RegexTokenizer{pattern: re}
+}
+
 func (t *RegexTokenizer) Tokenize(input string) ([]string, error) {
 	var err error
 	if t.re_ == nil {
