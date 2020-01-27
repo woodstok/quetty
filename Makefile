@@ -27,6 +27,6 @@ update: ## Update the files
 	$(GO) mod tidy
 .PHONY: help
 help: ## Display this help section
-	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z/0-9_-]+:.*?## / {printf "\033[36m%-38s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z\/0-9_-]+:.*?## / {printf "\033[36m%-38s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 .DEFAULT_GOAL := help
 .PHONY: test  clean  update
