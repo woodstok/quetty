@@ -47,6 +47,22 @@ Follow fzf pattern
 - [X] add path tokenizer/tests
 - [X] sort golden files so that test-update does not always rearrange the lines
 - [X] add ip address tokenizer/tests
-- [ ] add identifier tokenizer/tests
+- [X] add identifier tokenizer/tests
 - [ ] parallelize tokenMgr
     - [ ] make tokenset threadsafe
+
+=== Implement tfzf in goland ===
+bind-key -n M-i run-shell "tmux split-window -l 15 tfzf #I #P -a"
+tfzf currently uses bind key scripts and non modified fzf
+change quetty to mimic tfzf
+- [ ] how to run tmux command 
+	- [ ] get full output >> for basic commands like list-panes, display-message
+	- [ ] pass/return the pipe to be used by other functions
+	- [ ] have a multiplexer from different panes(?) to quetty input channel
+- [ ] currently we pass in the pane, window via the tmux script. change that to autodetect current pane/window
+- [ ]  get pane list based on all panes, all windows
+- [ ] implement capture pane.
+- [ ] implement fzf yank >> check tmux yank
+- [ ] implement fzf key bindings
+- [ ] implement fzf keybinding headers
+- [ ] need a better identifier tokenizer, or way to change regex delims like add hiphen, ignore hiphen etc
