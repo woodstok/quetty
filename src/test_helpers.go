@@ -35,6 +35,13 @@ func assertError(t *testing.T, got error, want error) {
 	}
 }
 
+func assertStringEqual(t *testing.T, want, got string) {
+	t.Helper()
+	if got != want {
+		t.Errorf("want %s\ngot %s\n", want, got)
+	}
+}
+
 func assertSliceEqual(t *testing.T, want, got []string) {
 	t.Helper()
 	if !reflect.DeepEqual(got, want) {

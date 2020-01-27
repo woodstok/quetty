@@ -55,14 +55,21 @@ Follow fzf pattern
 bind-key -n M-i run-shell "tmux split-window -l 15 tfzf #I #P -a"
 tfzf currently uses bind key scripts and non modified fzf
 change quetty to mimic tfzf
+- [ ] export tmux code to separate project/library
 - [ ] how to run tmux command 
 	- [ ] get full output >> for basic commands like list-panes, display-message
 	- [ ] pass/return the pipe to be used by other functions
 	- [ ] have a multiplexer from different panes(?) to quetty input channel
+	- [ ] add tmux verifier 
 - [ ] currently we pass in the pane, window via the tmux script. change that to autodetect current pane/window
 - [ ]  get pane list based on all panes, all windows
 - [ ] implement capture pane.
 - [ ] implement fzf yank >> check tmux yank
 - [ ] implement fzf key bindings
 - [ ] implement fzf keybinding headers
+- [ ] add setup verifier
+	- [ ] check tmux running
+	- [ ] check fzf version
+	- [ ] check fzf-tmux
+	- [ ] additional checks
 - [ ] need a better identifier tokenizer, or way to change regex delims like add hiphen, ignore hiphen etc
