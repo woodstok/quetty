@@ -4,9 +4,7 @@
 == Tokenizer ==
 With given input text, and a list of matching rules, 
 should return output with tokens that meet the satisfy the rules
-
-===== matching rules =====
-Should they be
+===== matching rules ===== Should they be
 	- functions? < lacks configurability
 		- any way of packaging go single files and dynamically loading them?
 	- config json file with regex
@@ -51,7 +49,7 @@ Follow fzf pattern
 - [ ] parallelize tokenMgr
     - [ ] make tokenset threadsafe
 
-=== Implement tfzf in goland ===
+=== Implement tfzf in go ===
 bind-key -n M-i run-shell "tmux split-window -l 15 tfzf #I #P -a"
 tfzf currently uses bind key scripts and non modified fzf
 change quetty to mimic tfzf
@@ -60,7 +58,7 @@ change quetty to mimic tfzf
 	- [ ] get full output >> for basic commands like list-panes, display-message
 	- [ ] pass/return the pipe to be used by other functions
 	- [ ] have a multiplexer from different panes(?) to quetty input channel
-	- [ ] add tmux verifier 
+	- [ ] add tmux verifier  - check that tmux is running, can get output etc
 - [ ] currently we pass in the pane, window via the tmux script. change that to autodetect current pane/window
 - [ ]  get pane list based on all panes, all windows
 - [ ] implement capture pane.

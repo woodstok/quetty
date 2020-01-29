@@ -2,6 +2,7 @@ package quetty
 
 import (
 	"fmt"
+	"io"
 	"strconv"
 	"strings"
 )
@@ -21,7 +22,7 @@ func NewTmuxClientWithSocket(socketPath string) *TmuxClient {
 }
 
 func (t *TmuxClient) NewSession(sessionName string) error {
-	_, err := t.RunCmd("new-session", "-d", sessionName)
+	_, err := t.RunCmd("new-session", "-d", "-s", sessionName)
 	return err
 }
 
@@ -62,6 +63,18 @@ func (t *TmuxClient) ListWindowPanes(win int) ([]string, error) {
 	return panes, nil
 }
 
+func (t *TmuxClient) CurrentWindow() (int, error) {
+	curWindowOut, err := t.RunCmd("display-message", "-p", "#I")
+	if err != nil {
+		return -1, err
+	}
+	curWindow, err := strconv.Atoi(curWindowOut)
+	if err != nil {
+		return -1, err
+	}
+	return curWindow, nil
+}
+
 func (t *TmuxClient) TmuxCapturePane(paneId string) (string, error) {
 	displayOut, err := t.RunCmd("display-message", "-p", "-t", paneId,
 		"#{scroll_region_lower}-#{scroll_position}")
@@ -91,6 +104,17 @@ func (t *TmuxClient) TmuxCapturePane(paneId string) (string, error) {
 			"-E", strconv.Itoa(bottomPos))
 	}
 	return t.RunCmd(capturePaneArgs...)
+}
+
+func (t *TmuxClient) WriteFromPane(paneId string, writer io.WriteCloser) error {
+	defer writer.Close()
+	paneContent, err := t.TmuxCapturePane(paneId)
+	if err != nil {
+		return err
+	}
+
+	_, err = io.WriteString(writer, paneContent)
+	return err
 }
 
 func (t *TmuxClient) RunCmd(args ...string) (string, error) {
