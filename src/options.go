@@ -5,6 +5,7 @@ import (
 )
 
 type Options struct {
+	reload       bool
 	matchWord    bool
 	matchNum     bool
 	matchHash    bool
@@ -17,7 +18,7 @@ type Options struct {
 }
 
 func initFlags(opt *Options) {
-	flag.BoolVar(&opt.matchWord, "word", false, "Tokenize basic words(w+)")
+	flag.BoolVar(&opt.matchWord, "word", true, "Tokenize basic words(w+)")
 	flag.BoolVar(&opt.matchNum, "num", false, "Tokenize basic numbers")
 	flag.BoolVar(&opt.matchHash, "hash", false, "Tokenize hash values")
 	flag.BoolVar(&opt.matchPath, "path", false, "Tokenize filepaths")
@@ -25,6 +26,7 @@ func initFlags(opt *Options) {
 	flag.BoolVar(&opt.matchTime, "time", false, "Tokenize time addresses")
 	flag.BoolVar(&opt.matchNospace, "nospace", false, "Tokenize all nonspace tokens")
 	flag.BoolVar(&opt.matchIdent, "ident", false, "Tokenize identifiers")
+	flag.BoolVar(&opt.reload, "r", false, "Only reload. Don't spawn fzf")
 	flag.UintVar(&opt.minLen, "m", 4, "minimum length of tokens")
 }
 
