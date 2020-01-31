@@ -81,4 +81,5 @@ change quetty to mimic tfzf
 - [ ] hash/quetty not working properly?
 - [ ] add input flag to quetty. take from input/ tmux temp file/ tmux 
 - [ ] tmux >> bind-key -n M-i run-shell -b "quetty -word"
-- [ ] 
+- [ ] give an option to edit the word in editor ( vim/emacs? )
+- [ ] keep cache of previously selected items in history??
