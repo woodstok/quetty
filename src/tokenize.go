@@ -15,7 +15,7 @@ const (
 	// technically all numbers match a basic hashregex
 	// but let us only match hashes that has
 	// atleast one alphabet in it
-	HASHREGEX = `([a-f0-9A-F]*[a-fA-F][a-f0-9A-F]*){4,}\b`
+	HASHREGEX = `(([a-f0-9]*[a-f][a-f0-9]*)|([A-F0-9]*[A-F][A-F0-9]*))\b`
 	IPV4REGEX = `\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}`
 	IPV6REGEX = `[a-fA-F0-9:]+`
 	TIMEREGEX = `((20\d\d-\d\d-\d\d)T((\d\d:\d\d:\d\d)(\.\d+(\+\d+)?)?)|((\d\d:\d\d:\d\d)(\.\d+(\+\d+)?)?)|(20\d\d-\d\d-\d\d))`
