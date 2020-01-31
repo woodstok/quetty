@@ -3,6 +3,7 @@ package quetty
 import (
 	"fmt"
 	"io"
+	"os/exec"
 	"strconv"
 	"strings"
 )
@@ -75,6 +76,14 @@ func (t *TmuxClient) CurrentWindow() (int, error) {
 	return curWindow, nil
 }
 
+func (t *TmuxClient) CurrentPane() (string, error) {
+	curPaneOut, err := t.RunCmd("display-message", "-p", "#D")
+	if err != nil {
+		return "", err
+	}
+	return curPaneOut, nil
+}
+
 func (t *TmuxClient) TmuxCapturePane(paneId string) (string, error) {
 	displayOut, err := t.RunCmd("display-message", "-p", "-t", paneId,
 		"#{scroll_region_lower}-#{scroll_position}")
@@ -128,4 +137,53 @@ func (t *TmuxClient) RunCmd(args ...string) (string, error) {
 		return "", fmt.Errorf("Tmux err:%v, out = %s", err, out)
 	}
 	return out, nil
+}
+
+func (t *TmuxClient) LoadBuffer(bufName string, output []byte) error {
+	argList := []string{}
+	if t.SocketPath != "" {
+		argList = append(argList, "-S", t.SocketPath)
+	}
+	argList = append(argList, "load-buffer", "-b", bufName, "-")
+	tmuxCmd := exec.Command("tmux", argList...)
+	tmuxInputPipe, err := tmuxCmd.StdinPipe()
+	if err != nil {
+		return err
+	}
+	err = tmuxCmd.Start()
+	if err != nil {
+		return err
+	}
+	_, err = tmuxInputPipe.Write(output)
+	if err != nil {
+		return err
+	}
+	tmuxInputPipe.Close()
+	return tmuxCmd.Wait()
+}
+
+func (t *TmuxClient) PasteBuffer(bufName string, paneId string) error {
+	_, err := t.RunCmd("paste-buffer", "-b", bufName, "-t", paneId)
+	return err
+}
+
+func (t *TmuxClient) DeleteBuffer(bufName string) error {
+	_, err := t.RunCmd("delete-buffer", "-b", bufName)
+	return err
+}
+
+func (t *TmuxClient) SendString(curPane string, output []byte) error {
+	err := t.LoadBuffer("quetty-buffer", output)
+	if err != nil {
+		return err
+	}
+	err = t.PasteBuffer("quetty-buffer", curPane)
+	if err != nil {
+		return err
+	}
+	err = t.DeleteBuffer("quetty-buffer")
+	if err != nil {
+		return err
+	}
+	return nil
 }

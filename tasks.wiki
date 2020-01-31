@@ -71,3 +71,14 @@ change quetty to mimic tfzf
 	- [ ] check fzf-tmux
 	- [ ] additional checks
 - [ ] need a better identifier tokenizer, or way to change regex delims like add hiphen, ignore hiphen etc
+
+
+
+- [ ] cleanup functions. 
+- [ ] create proper handlers /printers/ readers
+- [ ] find out best way to handle defer/closes of pipes and files
+- [ ] also parallel read/write of pipes with proper channels and closes
+- [ ] hash/quetty not working properly?
+- [ ] add input flag to quetty. take from input/ tmux temp file/ tmux 
+- [ ] tmux >> bind-key -n M-i run-shell -b "quetty -word"
+- [ ] 

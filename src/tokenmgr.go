@@ -64,6 +64,7 @@ func (tMgr *TokenMgr) Process(reader io.Reader) (Tokens, error) {
 	inputString := buf.String()
 	tokens := NewTokens(nil)
 	for _, t := range tMgr.tokenizers {
+		logger.Printf("tokenizing with %+v", t)
 		tokenSlice, err := Tokenize(inputString, t)
 		if err != nil {
 			return nil, err
