@@ -1,35 +1,13 @@
 package quetty
 
 import (
-	"fmt"
 	"io"
 	"log"
 	"os"
-	"os/exec"
-	"strings"
+	"sync"
 )
 
-const bufferFilePath = "/tmp/quetty-buffer"
-
-func GetFzfArgs() []string {
-	headerArg := "--header="
-	bindingArg := "--bind="
-	keyMap := make(map[string]string)
-	keyMap["ctrl-w"] = "word"
-	keyMap["ctrl-e"] = "nospace"
-	keyMap["ctrl-h"] = "hash"
-	keyMap["ctrl-n"] = "num"
-	keyMap["ctrl-p"] = "path"
-	keyMap["ctrl-i"] = "ip"
-	keyMap["ctrl-t"] = "time"
-
-	for key, tokenType := range keyMap {
-		headerArg += fmt.Sprintf("%s:%s ", key, tokenType)
-		bindingArg += fmt.Sprintf("%s:reload(quetty -r -%s),", key, tokenType)
-	}
-	bindingArg = strings.TrimSuffix(bindingArg, ",")
-	return []string{"--print0", bindingArg, headerArg}
-}
+const bufferFilePath = "/tmp/quetty-tmux-content"
 
 var logger *log.Logger
 
@@ -38,21 +16,20 @@ func Run(opts *Options) {
 	if err != nil {
 		log.Println(err)
 	}
-	logger = log.New(f, "prefix", log.LstdFlags)
+	logger = log.New(f, "", log.LstdFlags)
 	logger.Printf("Starting quetty")
 	defer f.Close()
 
-	tmuxClient := NewTmuxClient()
-	var curPane string
 	var inputStream io.ReadCloser
+	var combinedWg sync.WaitGroup
 
-	if !opts.reload {
+	if opts.stdin {
+		logger.Printf("Reading from stdin")
+		inputStream = os.Stdin
+	} else if opts.init {
+		logger.Printf("Reading from tmux panes")
+		tmuxClient := NewTmuxClient()
 		curWindow, err := tmuxClient.CurrentWindow()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		curPane, err = tmuxClient.CurrentPane()
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -61,6 +38,7 @@ func Run(opts *Options) {
 		if err != nil {
 			log.Fatal(err)
 		}
+		logger.Printf("panelist %v", paneList)
 
 		pipeList := []io.Reader{}
 		for _, paneId := range paneList {
@@ -71,19 +49,24 @@ func Run(opts *Options) {
 		combinedReader, combinedWriter := io.Pipe()
 
 		os.Remove(bufferFilePath)
+		logger.Printf("Creating temp pane file")
 		tmpFile, err := os.OpenFile(bufferFilePath, os.O_CREATE|os.O_WRONLY, 0644)
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		go func() {
+			combinedWg.Add(1)
+			defer combinedWg.Done()
 			io.Copy(io.MultiWriter(combinedWriter, tmpFile), io.MultiReader(pipeList...))
 			combinedWriter.Close()
 			tmpFile.Close()
+			logger.Printf("combined writer done copying")
 		}()
 		inputStream = combinedReader
 
 	} else {
+		logger.Printf("reading from tmux buffer")
 		inputReader, err := os.OpenFile(bufferFilePath, os.O_RDONLY, 0644)
 		inputStream = inputReader
 		if err != nil {
@@ -102,32 +85,14 @@ func Run(opts *Options) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	inputStream.Close()
+	logger.Printf("got %d tokens", len(tokens))
+	combinedWg.Wait()
 
 	printer, err := NewPrinter(opts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	var fzfCmd *exec.Cmd
-	if !opts.reload {
-
-		fzfCmd = exec.Command("fzf-tmux", GetFzfArgs()...)
-		fzfInputPipe, err := fzfCmd.StdinPipe()
-		if err != nil {
-			log.Fatal(err)
-		}
-		go printer.Print(fzfInputPipe, tokens)
-		output, err := fzfCmd.CombinedOutput()
-		if err == nil && curPane != "" {
-			err = tmuxClient.SendString(curPane, output)
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-
-	} else {
-		printer.Print(os.Stdout, tokens)
-	}
+	printer.Print(tokens)
 	os.Exit(0)
 }

@@ -58,7 +58,8 @@ func (tMgr *TokenMgr) Valid(val string) bool {
 	return len(val) >= int(tMgr.options.minLen)
 }
 
-func (tMgr *TokenMgr) Process(reader io.Reader) (Tokens, error) {
+func (tMgr *TokenMgr) Process(reader io.ReadCloser) (Tokens, error) {
+	defer reader.Close()
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(reader)
 	inputString := buf.String()

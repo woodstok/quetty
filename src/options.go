@@ -5,7 +5,8 @@ import (
 )
 
 type Options struct {
-	reload       bool
+	init         bool
+	stdin        bool
 	matchWord    bool
 	matchNum     bool
 	matchHash    bool
@@ -18,6 +19,8 @@ type Options struct {
 }
 
 func initFlags(opt *Options) {
+	flag.BoolVar(&opt.init, "init", false, "Start fzf with quetty keybindings")
+	flag.BoolVar(&opt.stdin, "stdin", false, "Basic tokenizer read from stdin. Don't start fzf interface")
 	flag.BoolVar(&opt.matchWord, "word", false, "Tokenize basic words(w+)")
 	flag.BoolVar(&opt.matchNum, "num", false, "Tokenize basic numbers")
 	flag.BoolVar(&opt.matchHash, "hash", false, "Tokenize hash values")
@@ -26,7 +29,6 @@ func initFlags(opt *Options) {
 	flag.BoolVar(&opt.matchTime, "time", false, "Tokenize time addresses")
 	flag.BoolVar(&opt.matchNospace, "nospace", false, "Tokenize all nonspace tokens")
 	flag.BoolVar(&opt.matchIdent, "ident", false, "Tokenize identifiers")
-	flag.BoolVar(&opt.reload, "r", false, "Only reload. Don't spawn fzf")
 	flag.UintVar(&opt.minLen, "m", 4, "minimum length of tokens")
 }
 

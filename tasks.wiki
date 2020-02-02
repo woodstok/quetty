@@ -63,8 +63,8 @@ change quetty to mimic tfzf
 - [ ]  get pane list based on all panes, all windows
 - [ ] implement capture pane.
 - [ ] implement fzf yank >> check tmux yank
-- [ ] implement fzf key bindings
-- [ ] implement fzf keybinding headers
+- [X] implement fzf key bindings
+- [X] implement fzf keybinding headers
 - [ ] add setup verifier
 	- [ ] check tmux running
 	- [ ] check fzf version
@@ -78,8 +78,29 @@ change quetty to mimic tfzf
 - [ ] create proper handlers /printers/ readers
 - [ ] find out best way to handle defer/closes of pipes and files
 - [ ] also parallel read/write of pipes with proper channels and closes
-- [ ] hash/quetty not working properly?
+- [X] hash/quetty not working properly?
 - [ ] add input flag to quetty. take from input/ tmux temp file/ tmux 
 - [ ] tmux >> bind-key -n M-i run-shell -b "quetty -word"
 - [ ] give an option to edit the word in editor ( vim/emacs? )
 - [ ] keep cache of previously selected items in history??
+
+options ----
+assume fzf flag always unless file is specified.
+if stdin is specified, read from stdin 
+else if init colelct from pane
+else  read from /tmp/quetty-tmux-content
+	
+
+-----Stages-------
+Input stage - tmux panes, stdin, file - outputs a reader/channel?
+if refresh, tmux panes
+else inputfile ( stdin ) if "-", else files
+
+bytes/string/reader -> Tokenizer  -> tokens 
+-----
+
+tokens -> Printer ->
+outputstream can be os.stdout. or fzfProcess if fzf
+
+do quetty -refresh  to get new tmux content
+-fzf to start fzf-tmux window and echo back content to pane
