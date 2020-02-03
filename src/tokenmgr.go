@@ -16,7 +16,10 @@ func NewTokenMgr(options *Options) (*TokenMgr, error) {
 
 	if options.matchWord {
 		tokMgr.tokenizers = append(tokMgr.tokenizers,
-			&RegexTokenizer{pattern: WORDREGEX})
+			&RegexTokenizer{pattern: WORDREGEX},
+			&RegexTokenizer{pattern: IDENTREGEX},
+			&RegexTokenizer{pattern: IDENTREGEXWITHDOT},
+		)
 	}
 	if options.matchNum {
 		tokMgr.tokenizers = append(tokMgr.tokenizers,

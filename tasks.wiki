@@ -104,3 +104,5 @@ outputstream can be os.stdout. or fzfProcess if fzf
 
 do quetty -refresh  to get new tmux content
 -fzf to start fzf-tmux window and echo back content to pane
+
+parallelize tokenizing and add more regexes

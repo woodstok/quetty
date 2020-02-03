@@ -7,10 +7,11 @@ import (
 )
 
 const (
-	WORDREGEX    = `\w+`
-	NOSPACEREGEX = `\S+`
-	IDENTREGEX   = `[A-Za-z][A-Za-z0-9]*`
-	NUMREGEX     = `\d+`
+	WORDREGEX         = `\w+`
+	IDENTREGEX        = `[A-Za-z]+([_-][A-Za-z0-9]+)*[A-Za-z0-9]*`
+	IDENTREGEXWITHDOT = `[A-Za-z]+([._-][A-Za-z0-9]+)*[A-Za-z0-9]*`
+	NOSPACEREGEX      = `\S+`
+	NUMREGEX          = `\d+`
 
 	// technically all numbers match a basic hashregex
 	// but let us only match hashes that has
@@ -91,7 +92,6 @@ func (t *PathTokenizer) isValid(token string) bool {
 		return false
 	}
 	return true
-
 }
 
 func (t *PathTokenizer) validStrings(tokens []string) []string {
